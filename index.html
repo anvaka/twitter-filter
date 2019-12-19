@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Twitter Top Content Filter</title>
+  <style>
+  .nonono {
+  opacity: 0
+}
+
+body {
+  font-family:Avenir,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  color:#2c3e50
+}
+
+h3 {
+  text-align: center
+}
+a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 24px;
+  border: 1px solid;
+  margin: 4px;
+  text-decoration: none
+}
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+.buttons {
+  margin: 14px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+</style>
+</head>
+<body>
+  <div class='container'>
+
+    <h3>Find the most popular tweets from a Twitter user</h3>
+    Drag one of these filter buttons
+    into the bookmarks bar, and click it while browsing a Twitter profile.
+  <div class='buttons'>
+    <div id='retweets'></div>
+    <div id='likes'></div>
+  </div>
+  <div class='nonono'>
+
+These links work on twitter.com only. Drag them into the bookmarks bar, no need to click them here.
+  </div>
+  Learn more about this project <a href='https://github.com/anvaka/twitter-filter'>on github</a>.
+  </div>
+<script>
+
+function template(minCount) {
+  return [
+    'javascript:',
+'var userMatch = window.location.href.match(/:\\/\\/twitter.com\\/([^?\/#]+)/);',
+'var user = userMatch && userMatch[1];',
+'if (user === "search"){',
+'  var search = decodeURIComponent(window.location.search).match(/from:(.+?)\\b/);',
+'  user = search && search[1];',
+'}',
+'var query = `from:${user} ' + minCount +'`;',
+'window.location.href=`/search?q=${encodeURIComponent(query)}`;'
+].join('')
+}
+
+let retweetsContainer = document.querySelector('#retweets');
+[10, 20, 50, 100, 500, 1000, 2000, 5000, 10000].forEach((count) => {
+  addLink(retweetsContainer, template('min_retweets:' + count), count + '+ retweets')
+});
+
+let likesContainer =  document.querySelector('#likes');
+[10, 50, 500, 1000, 2000, 5000, 10000, 20000, 40000].forEach((count) => {
+  addLink(likesContainer, template('min_faves:' + count), count + '+ likes')
+})
+
+function addLink(container, href, name) {
+  let a = document.createElement('a');
+  a.href = href;
+  a.title = 'Drag into bookmark bar and click on twitter\'s user profile page'
+  a.innerText = name;
+  container.appendChild(a);
+  a.onclick = printNoNoNo;
+}
+
+function printNoNoNo(e) {
+  let help = document.querySelector('.nonono');
+  help.style.opacity = 1;
+  e.preventDefault();
+  return false;
+}
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47259320-1', 'anvaka.github.io');
+  ga('send', 'pageview');</script>
+</body>
+</html>
