@@ -10,6 +10,7 @@ I made a simple bookmarklet, or a script that can be saved into browser's bookma
 When clicked on `twitter.com/...` domain, it pre-populates advanced search settings
 to quickly explore the most popular content of an account.
 
+![demo](demo_book_l0.gif)
 
 # install
 

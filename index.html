@@ -7,7 +7,9 @@
   <title>Twitter Top Content Filter</title>
   <style>
   .nonono {
-  opacity: 0
+  display: none;
+  margin: 4px 0;
+  color: #ef344d;
 }
 
 body {
@@ -20,7 +22,7 @@ body {
 h3 {
   text-align: center
 }
-a {
+a.btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,10 +55,13 @@ a {
     <div id='likes'></div>
   </div>
   <div class='nonono'>
-
 These links work on twitter.com only. Drag them into the bookmarks bar, no need to click them here.
   </div>
-  Learn more about this project <a href='https://github.com/anvaka/twitter-filter'>on github</a>.
+  <div>
+  Learn more about this project <a href='https://github.com/anvaka/twitter-filter'>on github</a> or
+  see animation below to better understand it:
+</div>
+  <img src='demo_book_l0.gif' style='max-width: 600px; width: 100%;'>
   </div>
 <script>
 
@@ -86,6 +91,7 @@ let likesContainer =  document.querySelector('#likes');
 
 function addLink(container, href, name) {
   let a = document.createElement('a');
+  a.classList.add('btn')
   a.href = href;
   a.title = 'Drag into bookmark bar and click on twitter\'s user profile page'
   a.innerText = name;
@@ -95,7 +101,7 @@ function addLink(container, href, name) {
 
 function printNoNoNo(e) {
   let help = document.querySelector('.nonono');
-  help.style.opacity = 1;
+  help.style.display = 'visible';
   e.preventDefault();
   return false;
 }
